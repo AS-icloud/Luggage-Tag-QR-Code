@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shape-first Luggage Tag Designer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07101e;color:#e5edf8;font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}.app{display:grid;grid-template-columns:320px minmax(360px,1fr) 340px;min-height:100vh}
+.panel{background:#142033;border-right:1px solid #26354c;min-width:0}.panel.right{border:0;border-left:1px solid #26354c}
+.head{padding:15px 17px;background:#0c1728;color:#45e0b5;font-weight:800;text-transform:uppercase;letter-spacing:.08em;position:sticky;top:0;z-index:3}
+.scroll{padding:14px;max-height:100vh;overflow:auto}.stage{padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px;overflow:auto}
+.sec{margin:15px 0 7px;color:#45e0b5;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+label{display:block;color:#9fb0c7;font-size:12px;margin:8px 0 4px}input,select,textarea{width:100%;border:1px solid #34445d;border-radius:7px;background:#202e43;color:#fff;padding:8px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.btn{width:100%;border:0;border-radius:8px;padding:10px;background:#2e7dd1;color:#fff;font-weight:750;cursor:pointer;margin-top:7px}.btn.green{background:#2dcc9a;color:#041711}.btn.purple{background:#8056e8}.btn.red{background:#a93d4c}.btn.slim{padding:7px;font-size:12px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px}.tabs button.on{background:#2dcc9a;color:#06140f}.note{font-size:11px;color:#71839a;line-height:1.45;margin-top:5px}
+canvas{background:#fff;box-shadow:0 12px 45px #0009;touch-action:none;max-width:100%;height:auto}.status{background:#142033;border:1px solid #34445d;border-radius:9px;padding:9px 12px;color:#aebbd0;font-size:12px;width:min(720px,100%)}
+.vertex,.item{border:1px solid #34445d;border-radius:9px;padding:8px;margin:7px 0;background:#19273a}.vertex b,.item b{color:#fff}.mini{display:grid;grid-template-columns:26px 1fr 1fr;gap:6px;align-items:center}.mini input{padding:6px}
+.item-head{display:flex;justify-content:space-between;align-items:center}.item-head button{width:auto;margin:0;padding:4px 8px}.pill{display:inline-block;border-radius:999px;padding:3px 7px;background:#263850;color:#9fc3ff;font-size:11px}
+.hidden{display:none!important}
+@media(max-width:900px){.app{grid-template-columns:1fr}.panel,.panel.right{border:0}.scroll{max-height:none}.stage{order:-1}.head{position:static}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="panel">
+    <div class="head">1 · Tag &amp; Printable Shape</div>
+    <div class="scroll">
+      <div class="sec">Wrap-around label</div>
+      <div class="row"><div><label>Width (mm)</label><input id="labelW" type="number" value="90" step=".1"></div><div><label>Gap (mm)</label><input id="gap" type="number" value=".3" step=".1"></div></div>
+      <div class="row"><div><label>Front height</label><input id="frontH" type="number" value="50" step=".1"></div><div><label>Back height</label><input id="backH" type="number" value="50" step=".1"></div></div>
+      <div class="row"><div><label>Top stick allowance</label><input id="stickTop" type="number" value="0" step=".1"></div><div><label>Bottom stick allowance</label><input id="stickBottom" type="number" value="0" step=".1"></div></div>
+      <label>Common tag shape</label>
+      <select id="shapePreset"><option value="custom">Custom polygon</option><option value="rectangle">Rectangle</option><option value="square">Square</option><option value="circle">Circle</option><option value="cutleft" selected>Rectangle · left corners clipped</option></select>
+      <button class="btn green" id="applyShape">Apply shape</button>
+      <div class="note">The printed strip defaults to 90 × 100.3 mm: 50 mm front, 0.3 mm fold gap and 50 mm back.</div>
+
+      <div class="sec">Side being edited</div>
+      <div class="tabs"><button id="frontTab" class="btn on">Front</button><button id="backTab" class="btn">Back</button></div>
+      <div class="sec">Shape layer being edited</div>
+      <div class="row3"><button id="physicalLayer" class="btn slim on">Physical tag</button><button id="labelLayer" class="btn slim">Label shape</button><button id="printLayer" class="btn slim">Printable area</button></div>
+      <div class="sec">Vertices A, B, C…</div>
+      <div id="vertices"></div>
+      <button class="btn slim" id="addVertex">+ Add vertex</button>
+      <div class="note">Coordinates are measured from the selected side’s top-left. Drag the lettered points directly on the preview.</div>
+
+      <div class="sec">Thread hole</div>
+      <div class="row3"><div><label>Centre X</label><input id="holeX" type="number" step=".1"></div><div><label>Centre Y</label><input id="holeY" type="number" step=".1"></div><div><label>Diameter</label><input id="holeD" type="number" step=".1"></div></div>
+      <button class="btn slim" id="addHole">+ Add another hole</button>
+      <div id="holes"></div>
+    </div>
+  </section>
+
+  <main class="stage">
+    <div class="tabs" style="width:min(560px,100%)"><button id="inspectBtn" class="btn on">Inspect / Drag</button><button id="finalBtn" class="btn">Final Print</button></div>
+    <canvas id="canvas"></canvas>
+    <div class="status" id="status">Front and back QR codes use the largest safe square with a white quiet strip.</div>
+    <div class="row" style="width:min(560px,100%)"><button class="btn green" id="savePng">Save PNG</button><button class="btn purple" id="printPdf">Print / Save PDF</button></div>
+  </main>
+
+  <section class="panel right">
+    <div class="head">2 · Front / Back Design</div>
+    <div class="scroll">
+      <div class="sec">QR content</div>
+      <label>QR content type</label>
+      <select id="payloadMode"><option value="contact" selected>Luggage-tag contact page</option><option value="raw">Raw URL or text</option></select>
+      <div id="contactFields">
+        <label>Viewer URL</label><input id="viewerUrl" value="https://as-icloud.github.io/Luggage-Tag-QR-Code/viewer.html" placeholder="Automatically uses viewer.html on this website">
+        <div class="row"><div><label>Name</label><input id="qrName" value="Ankit Srivastava"></div><div><label>Organisation</label><input id="qrOrg"></div></div>
+        <div class="row"><div><label>Address 1</label><textarea id="qrAddress" rows="4">B/1
+9 Queens Crescent
+Glasgow, UK
+G4 9BW</textarea></div><div><label>Address 2</label><textarea id="qrAddress2" rows="5">KSkin
+11
+Ingram Street
+Glasgow, UK
+G1 1HA</textarea></div></div>
+        <div class="row"><div><label>Mobile 1</label><input id="qrMobile" value="+44 (0) 77 62 60 94 90"></div><div><label>Mobile 2</label><input id="qrMobile2"></div></div>
+        <div class="row"><div><label>Telephone 1</label><input id="qrPhone" value="+44 (0) 141 55 25 022"></div><div><label>Telephone 2</label><input id="qrPhone2"></div></div>
+        <div class="row"><div><label>WhatsApp 1</label><input id="qrWhatsapp" value="+44 (0) 77 62 60 94 90"></div><div><label>WhatsApp 2</label><input id="qrWhatsapp2"></div></div>
+        <div class="row"><div><label>Email 1</label><input id="qrEmail" type="email" value="a_srivastava@icloud.com"></div><div><label>Email 2</label><input id="qrEmail2" type="email" value="home9crescent@gmail.com"></div></div>
+        <label>Notes</label><textarea id="qrNotes" rows="3">Please contact us via whatsapp or email if you have found this luggage</textarea>
+        <label>Generated QR destination</label><textarea id="generatedPayload" rows="3" readonly></textarea>
+      </div>
+      <div id="rawFields" class="hidden"><label>Destination URL or text</label><textarea id="payload" rows="4">https://as-icloud.github.io/Luggage-Tag-QR-Code/viewer.html</textarea></div>
+      <div class="row"><div><label>Front correction</label><select id="frontEC"><option>L</option><option>M</option><option>Q</option><option selected>H</option></select></div><div><label>Back correction</label><select id="backEC"><option>L</option><option>M</option><option>Q</option><option selected>H</option></select></div></div>
+      <label>White quiet strip around QR (mm)</label><input id="quiet" type="number" value="2" min="1" step=".5">
+      <button class="btn green" id="generate">Generate both QR codes</button>
+
+      <div class="sec">Image inside QR</div>
+      <label>Selected side QR-centre image</label><input id="qrLogo" type="file" accept="image/*">
+      <div class="row"><div><label>Width (% QR)</label><input id="qrLogoSize" type="number" value="16" min="5" max="22"></div><div><label>Position</label><select id="qrLogoPos"><option value="center">Centre</option><option value="tl">Top left</option><option value="tr">Top right</option><option value="bl">Bottom left</option><option value="br">Bottom right</option></select></div></div>
+      <div class="note">Keep the QR image at 22% or less and use H correction for the best recovery.</div>
+
+      <div class="sec">Text / image windows</div>
+      <div class="row"><button class="btn slim" id="addText">+ Text window</button><button class="btn slim" id="addImage">+ Image window</button></div>
+      <label>Window to position</label>
+      <select id="placeWindow"></select>
+      <label>Quick placement</label>
+      <div class="row"><button class="btn slim" data-place="left">Left of QR</button><button class="btn slim" data-place="right">Right of QR</button></div>
+      <div class="row3"><button class="btn slim" data-place="above">Above</button><button class="btn slim" data-place="overlap">Overlap QR</button><button class="btn slim" data-place="below">Below</button></div>
+      <label><input id="reserveWindows" type="checkbox" checked style="width:auto"> Reserve windows when finding maximum QR</label>
+      <div id="items"></div>
+      <div class="note">Each side can have any number of independent windows. Drag them in the preview; drag the lower-right handle to resize.</div>
+
+      <div class="sec">File name</div>
+      <input id="fileName" value="Ankit_Srivastava_Luggage_Tag_90x100.3mm">
+      <iframe id="qrEngine" src="generator.html" class="hidden" title="Local QR engine"></iframe>
+    </div>
+  </section>
+</div>
+<script>
+const $=id=>document.getElementById(id), cv=$('canvas'),ctx=cv.getContext('2d');
+const S={
+ side:'front',layer:'physical',inspect:true,scale:6,drag:null,qr:{front:null,back:null},qrLogo:{front:null,back:null},qrLogoXY:{front:{x:.5,y:.5},back:{x:.5,y:.5}},logoRects:{},
+ layers:{
+  physical:{front:[{x:20,y:0},{x:90,y:0},{x:90,y:50},{x:0,y:50},{x:0,y:30}],back:[{x:0,y:0},{x:90,y:0},{x:90,y:50},{x:20,y:50},{x:0,y:20}]},
+  label:{front:[{x:20,y:0},{x:90,y:0},{x:90,y:50},{x:0,y:50},{x:0,y:30}],back:[{x:0,y:0},{x:90,y:0},{x:90,y:50},{x:20,y:50},{x:0,y:20}]},
+  printable:{front:[{x:20,y:0},{x:90,y:0},{x:90,y:50},{x:0,y:50},{x:0,y:30}],back:[{x:0,y:0},{x:90,y:0},{x:90,y:50},{x:20,y:50},{x:0,y:20}]}
+ },
+ holes:{front:[{x:15,y:15,d:5}],back:[{x:15,y:35,d:5}]},
+ items:[
+  {id:1,side:'front',type:'text',x:20,y:32,w:58,h:8,text:'Srivastava   Glasgow  UK',img:null}
+ ],next:2
+};
+function n(id,d=0){const v=parseFloat($(id).value);return isNaN(v)?d:v}
+function dims(){return{w:n('labelW',58),fh:n('frontH',58),bh:n('backH',58),gap:n('gap',.1),h:n('frontH',58)+n('gap',.1)+n('backH',58)}}
+function sideH(side){return side==='front'?n('frontH',58):n('backH',58)}
+function yOffset(side){return side==='front'?0:n('frontH',58)+n('gap',.1)}
+function letters(i){return String.fromCharCode(65+i)}
+function currentPoints(){return S.layers[S.layer][S.side]}
+function polyPath(c,side,sc=S.scale,layer='physical'){
+ const p=S.layers[layer][side],off=yOffset(side);c.beginPath();p.forEach((v,i)=>(i?c.lineTo(v.x*sc,(v.y+off)*sc):c.moveTo(v.x*sc,(v.y+off)*sc)));c.closePath()
+}
+function pointInPoly(x,y,pts){let inside=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const a=pts[i],b=pts[j];if(((a.y>y)!=(b.y>y))&&(x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x))inside=!inside}return inside}
+function rectOverlap(a,b,p=0){return a.x<b.x+b.w+p&&a.x+a.w>b.x-p&&a.y<b.y+b.h+p&&a.y+a.h>b.y-p}
+function largestQr(side){
+ const D=dims(),h=sideH(side),quiet=n('quiet',2),step=.5,max=Math.min(D.w,h)-2*quiet,pts=S.layers.printable[side],holes=S.holes[side];
+ const reserve=$('reserveWindows').checked?S.items.filter(i=>i.side===side&&!i.overlap):[];
+ function fits(x,y,s){
+  const corners=[[x,y],[x+s,y],[x,y+s],[x+s,y+s],[x+s/2,y],[x+s/2,y+s],[x,y+s/2],[x+s,y+s/2]];
+  if(!corners.every(p=>pointInPoly(p[0],p[1],pts)))return false;
+  for(const h0 of holes){const nx=Math.max(x,Math.min(h0.x,x+s)),ny=Math.max(y,Math.min(h0.y,y+s));if((nx-h0.x)**2+(ny-h0.y)**2<(h0.d/2+quiet)**2)return false}
+  return !reserve.some(i=>rectOverlap({x,y,w:s,h:s},i,quiet));
+ }
+ for(let s=max;s>=10;s-=step)for(let y=quiet;y+s<=h-quiet+.01;y+=step)for(let x=quiet;x+s<=D.w-quiet+.01;x+=step)if(fits(x,y,s))return{x,y,w:s,h:s};
+ return{x:quiet,y:quiet,w:10,h:10}
+}
+function renderVertices(){
+ $('vertices').innerHTML=currentPoints().map((p,i)=>`<div class="vertex mini"><b>${letters(i)}</b><input data-v="${i}" data-a="x" type="number" step=".1" value="${p.x}"><input data-v="${i}" data-a="y" type="number" step=".1" value="${p.y}"></div>`).join('');
+ $('vertices').querySelectorAll('input').forEach(el=>el.oninput=()=>{currentPoints()[+el.dataset.v][el.dataset.a]=+el.value;draw()});
+ const h=S.holes[S.side][0]||{x:0,y:0,d:0};$('holeX').value=h.x;$('holeY').value=h.y;$('holeD').value=h.d;renderHoles()
+}
+function renderHoles(){
+ $('holes').innerHTML=S.holes[S.side].slice(1).map((h,i)=>`<div class="vertex"><b>Hole ${i+2}</b><div class="row3"><input data-h="${i+1}" data-a="x" value="${h.x}" type="number" step=".1"><input data-h="${i+1}" data-a="y" value="${h.y}" type="number" step=".1"><input data-h="${i+1}" data-a="d" value="${h.d}" type="number" step=".1"></div></div>`).join('');
+ $('holes').querySelectorAll('input').forEach(el=>el.oninput=()=>{S.holes[S.side][+el.dataset.h][el.dataset.a]=+el.value;draw()})
+}
+function renderItems(){
+ const list=S.items.filter(i=>i.side===S.side);
+ const old=$('placeWindow').value;$('placeWindow').innerHTML=list.map(i=>`<option value="${i.id}">${i.type==='text'?'Text':'Image'} window ${i.id}${i.overlap?' · overlap':''}</option>`).join('');if(list.length)$('placeWindow').value=list.some(i=>String(i.id)===old)?old:String(list[0].id);
+ $('items').innerHTML=list.map(i=>`<div class="item"><div class="item-head"><b>${i.type==='text'?'Text':'Image'} window ${i.id}</b><button class="btn red" data-del="${i.id}">Remove</button></div>
+ <div class="row"><div><label>X</label><input data-id="${i.id}" data-a="x" value="${i.x}" type="number" step=".1"></div><div><label>Y</label><input data-id="${i.id}" data-a="y" value="${i.y}" type="number" step=".1"></div></div>
+ <div class="row"><div><label>Width</label><input data-id="${i.id}" data-a="w" value="${i.w}" type="number" step=".1"></div><div><label>Height</label><input data-id="${i.id}" data-a="h" value="${i.h}" type="number" step=".1"></div></div>
+ ${i.type==='text'?`<label>Multiline text</label><textarea data-id="${i.id}" data-a="text" rows="3">${i.text||''}</textarea>`:`<label>Image</label><input data-file="${i.id}" type="file" accept="image/*">`}
+ </div>`).join('');
+ $('items').querySelectorAll('[data-id]').forEach(el=>el.oninput=()=>{const i=S.items.find(x=>x.id==el.dataset.id);i[el.dataset.a]=el.dataset.a==='text'?el.value:+el.value;draw()});
+ $('items').querySelectorAll('[data-del]').forEach(el=>el.onclick=()=>{S.items=S.items.filter(i=>i.id!=el.dataset.del);renderItems();draw()});
+ $('items').querySelectorAll('[data-file]').forEach(el=>el.onchange=e=>loadImage(e.target.files[0],img=>{S.items.find(i=>i.id==el.dataset.file).img=img;draw()}))
+}
+function loadImage(file,done){if(!file)return;const r=new FileReader;r.onload=()=>{const im=new Image;im.onload=()=>done(im);im.src=r.result};r.readAsDataURL(file)}
+function drawQr(side,q){
+ const off=yOffset(side),im=S.qr[side],quiet=n('quiet',2),sc=S.scale;
+ ctx.save();polyPath(ctx,side,sc,'printable');ctx.clip();ctx.fillStyle='#fff';ctx.fillRect((q.x-quiet)*sc,(q.y+off-quiet)*sc,(q.w+2*quiet)*sc,(q.h+2*quiet)*sc);
+ if(im)ctx.drawImage(im,q.x*sc,(q.y+off)*sc,q.w*sc,q.h*sc);else{ctx.strokeStyle='#5c6cff';ctx.setLineDash([4,3]);ctx.strokeRect(q.x*sc,(q.y+off)*sc,q.w*sc,q.h*sc);ctx.setLineDash([])}
+ const logo=S.qrLogo[side];if(logo&&im){const z=q.w*n('qrLogoSize',16)/100,p=S.qrLogoXY[side],x=Math.max(q.x+1,Math.min(q.x+q.w-z-1,q.x+p.x*q.w-z/2)),y=Math.max(q.y+1,Math.min(q.y+q.h-z-1,q.y+p.y*q.h-z/2));S.logoRects[side]={x,y,w:z,h:z,q};ctx.fillStyle='#fff';ctx.fillRect((x-.7)*sc,(y+off-.7)*sc,(z+1.4)*sc,(z+1.4)*sc);ctx.drawImage(logo,x*sc,(y+off)*sc,z*sc,z*sc)}ctx.restore()
+}
+function fitText(text,x,y,w,h){const lines=(text||'').split('\n');let size=Math.max(6,h*S.scale/(lines.length*1.35));ctx.font=`bold ${size}px Arial`;while(size>6&&Math.max(...lines.map(t=>ctx.measureText(t).width))>w*S.scale-6)ctx.font=`bold ${--size}px Arial`;ctx.fillStyle='#000';ctx.textAlign='center';ctx.textBaseline='middle';lines.forEach((t,k)=>ctx.fillText(t,(x+w/2)*S.scale,(y+h/2+(k-(lines.length-1)/2)*size*1.25)*S.scale))}
+function draw(){
+ const D=dims();S.scale=Math.min(7,680/D.h,620/D.w);cv.width=Math.round(D.w*S.scale);cv.height=Math.round(D.h*S.scale);ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
+ for(const side of ['front','back']){const off=yOffset(side);ctx.save();polyPath(ctx,side,S.scale,'label');ctx.clip();ctx.fillStyle='#fff';ctx.fillRect(0,off*S.scale,D.w*S.scale,sideH(side)*S.scale);ctx.restore();const q=largestQr(side);drawQr(side,q)}
+ ctx.fillStyle='#fff';ctx.fillRect(0,n('frontH',58)*S.scale,D.w*S.scale,n('gap',.1)*S.scale);
+ ctx.save();ctx.strokeStyle='#cc8b28';ctx.setLineDash([5,3]);ctx.beginPath();ctx.moveTo(0,n('stickTop',.8)*S.scale);ctx.lineTo(D.w*S.scale,n('stickTop',.8)*S.scale);ctx.moveTo(0,(D.h-n('stickBottom',.5))*S.scale);ctx.lineTo(D.w*S.scale,(D.h-n('stickBottom',.5))*S.scale);ctx.stroke();ctx.restore();
+ S.items.forEach(i=>{const off=yOffset(i.side),y=i.y+off;ctx.fillStyle='#fff';ctx.fillRect(i.x*S.scale,y*S.scale,i.w*S.scale,i.h*S.scale);if(i.type==='text')fitText(i.text,i.x,y,i.w,i.h);else if(i.img)ctx.drawImage(i.img,i.x*S.scale,y*S.scale,i.w*S.scale,i.h*S.scale)});
+ ctx.save();ctx.lineWidth=1.2;for(const side of ['front','back']){if(S.inspect){ctx.strokeStyle='#111';polyPath(ctx,side,S.scale,'physical');ctx.stroke();ctx.strokeStyle='#20a46b';ctx.setLineDash([4,2]);polyPath(ctx,side,S.scale,'printable');ctx.stroke();ctx.setLineDash([])}ctx.strokeStyle='#111';polyPath(ctx,side,S.scale,'label');ctx.stroke();const off=yOffset(side);S.holes[side].forEach(h=>{ctx.fillStyle='#fff';ctx.strokeStyle='#111';ctx.beginPath();ctx.arc(h.x*S.scale,(h.y+off)*S.scale,h.d*S.scale/2,0,Math.PI*2);ctx.fill();ctx.stroke()})}ctx.restore();
+ if(S.inspect){ctx.font='bold 10px Arial';ctx.textAlign='center';for(const side of ['front','back']){const off=yOffset(side);S.layers[S.layer][side].forEach((p,i)=>{ctx.fillStyle='#ed3f9a';ctx.beginPath();ctx.arc(p.x*S.scale,(p.y+off)*S.scale,5,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.fillText(letters(i),p.x*S.scale,(p.y+off)*S.scale+3)});S.holes[side].forEach(h=>{ctx.fillStyle='#e63946';ctx.beginPath();ctx.arc(h.x*S.scale,(h.y+off)*S.scale,4,0,Math.PI*2);ctx.fill()})}S.items.forEach(i=>{const off=yOffset(i.side);ctx.strokeStyle='#d59a2e';ctx.setLineDash([4,2]);ctx.strokeRect(i.x*S.scale,(i.y+off)*S.scale,i.w*S.scale,i.h*S.scale);ctx.setLineDash([]);ctx.fillStyle='#d59a2e';ctx.fillRect((i.x+i.w)*S.scale-6,(i.y+off+i.h)*S.scale-6,12,12)})}
+ const fq=largestQr('front'),bq=largestQr('back');$('status').textContent=`Front maximum QR ${fq.w.toFixed(1)} × ${fq.h.toFixed(1)} mm · Back maximum QR ${bq.w.toFixed(1)} × ${bq.h.toFixed(1)} mm · White quiet strip ${n('quiet',2)} mm.`
+}
+function selectSide(side){S.side=side;$('frontTab').classList.toggle('on',side==='front');$('backTab').classList.toggle('on',side==='back');renderVertices();renderItems();draw()}
+function selectLayer(layer){S.layer=layer;for(const id of ['physical','label','print'])$(id+'Layer').classList.toggle('on',layer===(id==='print'?'printable':id));renderVertices();draw()}
+function addItem(type){S.items.push({id:S.next++,side:S.side,type,x:3,y:3,w:type==='text'?35:12,h:type==='text'?10:12,text:type==='text'?'Text window':'',img:null,overlap:false});renderItems();$('placeWindow').value=String(S.next-1);draw()}
+function placeSelectedWindow(mode){
+ const item=S.items.find(i=>String(i.id)===$('placeWindow').value);if(!item)return;
+ const D=dims(),h=sideH(item.side),quiet=n('quiet',2);item.overlap=true;const q=largestQr(item.side);
+ if(mode==='overlap'){item.x=q.x+(q.w-item.w)/2;item.y=q.y+(q.h-item.h)/2}
+ else{item.overlap=false;if(mode==='left'){item.x=Math.max(0,q.x-item.w-quiet);item.y=q.y+(q.h-item.h)/2}if(mode==='right'){item.x=Math.min(D.w-item.w,q.x+q.w+quiet);item.y=q.y+(q.h-item.h)/2}if(mode==='above'){item.x=q.x+(q.w-item.w)/2;item.y=Math.max(0,q.y-item.h-quiet)}if(mode==='below'){item.x=q.x+(q.w-item.w)/2;item.y=Math.min(h-item.h,q.y+q.h+quiet)}}
+ item.x=Math.max(0,Math.min(D.w-item.w,item.x));item.y=Math.max(0,Math.min(h-item.h,item.y));renderItems();$('placeWindow').value=String(item.id);draw()
+}
+function contactPayload(){
+ const base=$('viewerUrl').value.trim()||new URL('viewer.html',location.href).href,lines=[],add=(key,id,multi=false)=>{const v=$(id).value.trim();if(v)lines.push(key+': '+(multi?v.replace(/\n+/g,'; '):v))};
+ add('name','qrName');add('org','qrOrg');add('address','qrAddress',true);add('address2','qrAddress2',true);add('mobile','qrMobile');add('mobile2','qrMobile2');add('phone','qrPhone');add('phone2','qrPhone2');add('whatsapp','qrWhatsapp');add('whatsapp2','qrWhatsapp2');add('email','qrEmail');add('email2','qrEmail2');add('note','qrNotes',true);
+ const out=lines.length?base+'?d='+encodeURIComponent(lines.join('\n')):base;$('generatedPayload').value=out;return out
+}
+function currentPayload(){return $('payloadMode').value==='contact'?contactPayload():$('payload').value}
+function generateQrs(){const f=$('qrEngine'),text=currentPayload();if(!f.contentWindow||!f.contentWindow.QRCode){$('status').textContent='QR engine is still loading. Try Generate again in a moment.';return}for(const side of ['front','back']){const d=f.contentDocument.createElement('div');f.contentDocument.body.appendChild(d);new f.contentWindow.QRCode(d,{text,width:800,height:800,correctLevel:f.contentWindow.QRCode.CorrectLevel[$(side+'EC').value]});setTimeout(()=>{const src=d.querySelector('canvas')?.toDataURL('image/png')||d.querySelector('img')?.src;if(src){const im=new Image;im.onload=()=>{S.qr[side]=im;draw()};im.src=src}d.remove()},120)}}
+$('frontTab').onclick=()=>selectSide('front');$('backTab').onclick=()=>selectSide('back');$('addText').onclick=()=>addItem('text');$('addImage').onclick=()=>addItem('image');$('generate').onclick=generateQrs;
+$('payloadMode').onchange=()=>{$('contactFields').classList.toggle('hidden',$('payloadMode').value!=='contact');$('rawFields').classList.toggle('hidden',$('payloadMode').value!=='raw');if($('payloadMode').value==='contact')contactPayload()};
+['viewerUrl','qrName','qrOrg','qrAddress','qrAddress2','qrMobile','qrMobile2','qrPhone','qrPhone2','qrWhatsapp','qrWhatsapp2','qrEmail','qrEmail2','qrNotes'].forEach(id=>$(id).oninput=contactPayload);
+document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>placeSelectedWindow(b.dataset.place));
+$('physicalLayer').onclick=()=>selectLayer('physical');$('labelLayer').onclick=()=>selectLayer('label');$('printLayer').onclick=()=>selectLayer('printable');
+$('addVertex').onclick=()=>{currentPoints().push({x:n('labelW',58)/2,y:sideH(S.side)/2});renderVertices();draw()};
+$('addHole').onclick=()=>{S.holes[S.side].push({x:n('labelW',58)/2,y:sideH(S.side)/2,d:5});renderHoles();draw()};
+['holeX','holeY','holeD'].forEach((id,k)=>$(id).oninput=()=>{const h=S.holes[S.side][0];h[['x','y','d'][k]]=n(id);draw()});
+$('applyShape').onclick=()=>{const D=dims(),p=$('shapePreset').value,h=sideH(S.side);if(p==='rectangle'||p==='square')S.layers[S.layer][S.side]=[{x:0,y:0},{x:D.w,y:0},{x:D.w,y:h},{x:0,y:h}];else if(p==='cutleft')S.layers[S.layer][S.side]=S.side==='front'?[{x:15,y:0},{x:D.w,y:0},{x:D.w,y:h},{x:0,y:h},{x:0,y:15}]:[{x:0,y:0},{x:D.w,y:0},{x:D.w,y:h},{x:15,y:h},{x:0,y:h-15}];else if(p==='circle')S.layers[S.layer][S.side]=Array.from({length:16},(_,i)=>({x:D.w/2+Math.min(D.w,h)/2*Math.cos(-Math.PI/2+i*Math.PI/8),y:h/2+Math.min(D.w,h)/2*Math.sin(-Math.PI/2+i*Math.PI/8)}));renderVertices();draw()};
+$('qrLogo').onchange=e=>loadImage(e.target.files[0],im=>{S.qrLogo[S.side]=im;S.qrLogoXY[S.side]={x:.5,y:.5};draw()});
+$('qrLogoPos').onchange=()=>{const p={center:[.5,.5],tl:[.18,.18],tr:[.82,.18],bl:[.18,.82],br:[.82,.82]}[$('qrLogoPos').value];S.qrLogoXY[S.side]={x:p[0],y:p[1]};draw()};
+['labelW','frontH','backH','gap','quiet','stickTop','stickBottom','reserveWindows','qrLogoSize','qrLogoPos'].forEach(id=>$(id).oninput=draw);
+$('inspectBtn').onclick=()=>{S.inspect=true;$('inspectBtn').classList.add('on');$('finalBtn').classList.remove('on');draw()};$('finalBtn').onclick=()=>{S.inspect=false;$('finalBtn').classList.add('on');$('inspectBtn').classList.remove('on');draw()};
+function pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*cv.width/r.width/S.scale,y:(e.clientY-r.top)*cv.height/r.height/S.scale}}
+cv.onpointerdown=e=>{if(!S.inspect)return;const p=pos(e);for(const side of ['front','back']){const off=yOffset(side),lr=S.logoRects[side];if(lr&&p.x>=lr.x&&p.x<=lr.x+lr.w&&p.y>=off+lr.y&&p.y<=off+lr.y+lr.h){S.drag={type:'qrlogo',side};cv.setPointerCapture(e.pointerId);return}for(let i=0;i<S.layers[S.layer][side].length;i++){const v=S.layers[S.layer][side][i];if(Math.hypot(p.x-v.x,p.y-off-v.y)<3){S.drag={type:'vertex',side,i,layer:S.layer};cv.setPointerCapture(e.pointerId);return}}for(let i=0;i<S.holes[side].length;i++){const h=S.holes[side][i];if(Math.hypot(p.x-h.x,p.y-off-h.y)<4){S.drag={type:'hole',side,i};cv.setPointerCapture(e.pointerId);return}}}for(const i of [...S.items].reverse()){const off=yOffset(i.side),resize=Math.hypot(p.x-(i.x+i.w),p.y-(off+i.y+i.h))<3;if(resize||p.x>=i.x&&p.x<=i.x+i.w&&p.y>=off+i.y&&p.y<=off+i.y+i.h){S.drag={type:resize?'resize':'item',id:i.id,dx:p.x-i.x,dy:p.y-off-i.y};cv.setPointerCapture(e.pointerId);return}}};
+cv.onpointermove=e=>{if(!S.drag)return;const p=pos(e),D=dims();if(S.drag.type==='vertex'){const v=S.layers[S.drag.layer][S.drag.side][S.drag.i];v.x=Math.max(0,Math.min(D.w,p.x));v.y=Math.max(0,Math.min(sideH(S.drag.side),p.y-yOffset(S.drag.side)))}else if(S.drag.type==='hole'){const h=S.holes[S.drag.side][S.drag.i];h.x=Math.max(0,Math.min(D.w,p.x));h.y=Math.max(0,Math.min(sideH(S.drag.side),p.y-yOffset(S.drag.side)))}else if(S.drag.type==='qrlogo'){const r=S.logoRects[S.drag.side],ly=p.y-yOffset(S.drag.side);S.qrLogoXY[S.drag.side]={x:(p.x-r.q.x)/r.q.w,y:(ly-r.q.y)/r.q.h}}else{const i=S.items.find(x=>x.id===S.drag.id),ly=p.y-yOffset(i.side);if(S.drag.type==='resize'){i.w=Math.max(2,p.x-i.x);i.h=Math.max(2,ly-i.y)}else{i.x=Math.max(0,Math.min(D.w-i.w,p.x-S.drag.dx));i.y=Math.max(0,Math.min(sideH(i.side)-i.h,ly-S.drag.dy))}}renderVertices();renderItems();draw()};
+cv.onpointerup=()=>S.drag=null;
+$('savePng').onclick=()=>{const old=S.inspect;S.inspect=false;draw();const a=document.createElement('a');a.download=$('fileName').value+'.png';a.href=cv.toDataURL('image/png');a.click();S.inspect=old;draw()};
+$('printPdf').onclick=()=>{const old=S.inspect;S.inspect=false;draw();const url=cv.toDataURL('image/png'),D=dims(),w=open('','_blank');w.document.write(`<style>@page{size:${D.w}mm ${D.h}mm;margin:0}body{margin:0}img{width:${D.w}mm;height:${D.h}mm;display:block}</style><img src="${url}" onload="print()">`);w.document.close();S.inspect=old;draw()};
+renderVertices();renderItems();contactPayload();draw();setTimeout(generateQrs,700);
+</script>
+</body>
+</html>
