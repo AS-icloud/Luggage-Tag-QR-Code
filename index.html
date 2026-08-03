@@ -1,0 +1,1670 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src 'self' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data:; worker-src 'self' blob:; connect-src 'self' blob: data:; frame-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Luggage Tag Point Designer</title>
+<meta name="theme-color" content="#1677d2">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Luggage Tag Designer">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255),rgb(24 24 24));font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}.app-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin:0 auto 1rem;max-width:736px}.app-nav a{color:inherit;text-decoration:none;border:1px solid currentColor;border-radius:999px;padding:.55rem .8rem;font-weight:600}.app-nav a[aria-current="page"]{background:#1677d2;color:#fff;border-color:#1677d2}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 5rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<nav class="app-nav" aria-label="Application sections">
+  <a href="index.html" aria-current="page">Shape &amp; Print Designer</a>
+  <a href="qr-generator.html">QR Content &amp; Generator</a>
+  <a href="viewer.html">Scanned QR Viewer</a>
+</nav>
+<iframe sandbox="allow-scripts allow-modals allow-downloads" referrerpolicy="no-referrer" title="Luggage Tag Point Designer" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Luggage Tag Point Designer&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;luggage-point-designer&quot;&gt;
+  &lt;style id=&quot;lp-dynamic-page-style&quot;&gt;&lt;/style&gt;
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Starting shape
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-shape&quot;&gt;
+        &lt;option value=&quot;rectangle&quot; selected&gt;Rectangle&lt;/option&gt;
+        &lt;option value=&quot;square&quot;&gt;Square&lt;/option&gt;
+        &lt;option value=&quot;circle&quot;&gt;Circle&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Unit
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-unit&quot;&gt;
+        &lt;option value=&quot;mm&quot; selected&gt;Millimetres&lt;/option&gt;
+        &lt;option value=&quot;cm&quot;&gt;Centimetres&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-width&quot;&gt;Length
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-width&quot; type=&quot;number&quot; min=&quot;10&quot; step=&quot;1&quot; value=&quot;90&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-height&quot;&gt;Breadth
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-height&quot; type=&quot;number&quot; min=&quot;10&quot; step=&quot;1&quot; value=&quot;50&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-side&quot; hidden&gt;Side
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-side&quot; type=&quot;number&quot; min=&quot;10&quot; step=&quot;1&quot; value=&quot;50&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-radius&quot; hidden&gt;Radius
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-radius&quot; type=&quot;number&quot; min=&quot;5&quot; step=&quot;1&quot; value=&quot;25&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Point to edit
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-edit-point&quot;&gt;&lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Exact X coordinate
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-point-x&quot; type=&quot;number&quot; step=&quot;1&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Exact Y coordinate
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-point-y&quot; type=&quot;number&quot; step=&quot;1&quot;&gt;
+    &lt;/label&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;lp-apply-point&quot; type=&quot;button&quot;&gt;Update point coordinates&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Hole centre X
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-hole-x&quot; type=&quot;number&quot; step=&quot;1&quot; value=&quot;15&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Hole centre Y
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-hole-y&quot; type=&quot;number&quot; step=&quot;1&quot; value=&quot;15&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Hole diameter
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-hole-d&quot; type=&quot;number&quot; min=&quot;1&quot; step=&quot;1&quot; value=&quot;5&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;div class=&quot;form-check form-switch&quot;&gt;
+      &lt;input class=&quot;form-check-input&quot; id=&quot;lp-show-mirror&quot; type=&quot;checkbox&quot;&gt;
+      &lt;label class=&quot;form-check-label&quot; for=&quot;lp-show-mirror&quot;&gt;Show fold-out mirrored back&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Mirror placement
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-mirror-side&quot;&gt;
+        &lt;option value=&quot;bottom&quot; selected&gt;Below front&lt;/option&gt;
+        &lt;option value=&quot;right&quot;&gt;Right of front&lt;/option&gt;
+        &lt;option value=&quot;left&quot;&gt;Left of front&lt;/option&gt;
+        &lt;option value=&quot;top&quot;&gt;Above front&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Fold allowance
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-fold-gap&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;0.1&quot; value=&quot;0.3&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;div class=&quot;form-check form-switch&quot;&gt;
+      &lt;input class=&quot;form-check-input&quot; id=&quot;lp-text-needed&quot; type=&quot;checkbox&quot;&gt;
+      &lt;label class=&quot;form-check-label&quot; for=&quot;lp-text-needed&quot;&gt;Text window needed&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Print text window on
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-text-side&quot;&gt;
+        &lt;option value=&quot;front&quot; selected&gt;Front only&lt;/option&gt;
+        &lt;option value=&quot;back&quot;&gt;Back only&lt;/option&gt;
+        &lt;option value=&quot;both&quot;&gt;Front and back&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Text position relative to QR
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-text-relation&quot;&gt;
+        &lt;option value=&quot;below&quot; selected&gt;Below QR&lt;/option&gt;
+        &lt;option value=&quot;above&quot;&gt;Above QR&lt;/option&gt;
+        &lt;option value=&quot;right&quot;&gt;Right of QR&lt;/option&gt;
+        &lt;option value=&quot;left&quot;&gt;Left of QR&lt;/option&gt;
+        &lt;option value=&quot;overlap&quot;&gt;Overlap QR&lt;/option&gt;
+        &lt;option value=&quot;custom&quot;&gt;Custom position&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Window being edited
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-edit-window-side&quot;&gt;
+        &lt;option value=&quot;front&quot; selected&gt;Front window&lt;/option&gt;
+        &lt;option value=&quot;back&quot;&gt;Back/side window&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Bottom-left X
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-text-x&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;20&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Bottom-left Y
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-text-y&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;10&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Window width
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-text-w&quot; type=&quot;number&quot; min=&quot;1&quot; step=&quot;1&quot; value=&quot;58&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-text-fields&quot; hidden&gt;Window height
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-text-h&quot; type=&quot;number&quot; min=&quot;1&quot; step=&quot;1&quot; value=&quot;8&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-row lp-actions&quot;&gt;
+    &lt;button class=&quot;btn btn-primary&quot; id=&quot;lp-join&quot; type=&quot;button&quot; disabled&gt;Join two selected points&lt;/button&gt;
+    &lt;button class=&quot;btn&quot; id=&quot;lp-undo&quot; type=&quot;button&quot; disabled&gt;Undo cut&lt;/button&gt;
+    &lt;span class=&quot;viz-badge&quot; id=&quot;lp-cursor&quot;&gt;Cursor X 0.0 mm · Y 0.0 mm&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;card lp-qr-result&quot;&gt;
+    &lt;div class=&quot;text-muted&quot;&gt;Best available QR · error correction H&lt;/div&gt;
+    &lt;div class=&quot;viz-stat-value&quot; id=&quot;lp-qr-size&quot;&gt;Calculating…&lt;/div&gt;
+    &lt;div class=&quot;text-small text-muted&quot; id=&quot;lp-qr-note&quot;&gt;Includes a protected white quiet zone and avoids the thread hole.&lt;/div&gt;
+    &lt;div class=&quot;text-small&quot; id=&quot;lp-qr-comparison&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Use remaining area for
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-unused-mode&quot;&gt;
+        &lt;option value=&quot;blank&quot; selected&gt;Leave blank&lt;/option&gt;
+        &lt;option value=&quot;text&quot;&gt;Text&lt;/option&gt;
+        &lt;option value=&quot;image&quot;&gt;Image&lt;/option&gt;
+        &lt;option value=&quot;decor&quot;&gt;QR-looking squares and dots&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-unused-text&quot; hidden&gt;Text
+      &lt;textarea class=&quot;form-control&quot; id=&quot;lp-unused-text&quot; rows=&quot;2&quot;&gt;Owner identification&lt;/textarea&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label lp-unused-image&quot; hidden&gt;Image
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-unused-image&quot; type=&quot;file&quot; accept=&quot;image/*&quot;&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;lp-canvas&quot;&gt;
+    &lt;svg id=&quot;lp-svg&quot; viewBox=&quot;0 0 760 440&quot; role=&quot;img&quot; aria-labelledby=&quot;lp-title lp-desc&quot;&gt;
+      &lt;title id=&quot;lp-title&quot;&gt;Luggage tag shape and one-centimetre perimeter points&lt;/title&gt;
+      &lt;desc id=&quot;lp-desc&quot;&gt;Choose a starting shape and dimensions, select two perimeter points to join them into a polygon, and drag the thread hole.&lt;/desc&gt;
+      &lt;defs&gt;
+        &lt;pattern id=&quot;lp-qr-pattern&quot; width=&quot;12&quot; height=&quot;12&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;
+          &lt;rect width=&quot;12&quot; height=&quot;12&quot; fill=&quot;var(--card)&quot;&gt;&lt;/rect&gt;
+          &lt;rect width=&quot;6&quot; height=&quot;6&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/rect&gt;
+          &lt;rect x=&quot;7&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;4&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/rect&gt;
+          &lt;rect x=&quot;4&quot; y=&quot;8&quot; width=&quot;5&quot; height=&quot;4&quot; fill=&quot;var(--foreground)&quot;&gt;&lt;/rect&gt;
+        &lt;/pattern&gt;
+        &lt;pattern id=&quot;lp-decor-pattern&quot; width=&quot;18&quot; height=&quot;18&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;
+          &lt;rect width=&quot;18&quot; height=&quot;18&quot; fill=&quot;var(--card)&quot;&gt;&lt;/rect&gt;
+          &lt;circle cx=&quot;4&quot; cy=&quot;4&quot; r=&quot;2.5&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/circle&gt;
+          &lt;rect x=&quot;10&quot; y=&quot;2&quot; width=&quot;5&quot; height=&quot;5&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/rect&gt;
+          &lt;rect x=&quot;3&quot; y=&quot;11&quot; width=&quot;6&quot; height=&quot;6&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/rect&gt;
+          &lt;circle cx=&quot;14&quot; cy=&quot;14&quot; r=&quot;2&quot; fill=&quot;var(--muted-foreground)&quot;&gt;&lt;/circle&gt;
+        &lt;/pattern&gt;
+      &lt;/defs&gt;
+      &lt;g id=&quot;lp-grid&quot;&gt;&lt;/g&gt;
+      &lt;g id=&quot;lp-art&quot;&gt;&lt;/g&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;card lp-selection&quot;&gt;
+    &lt;div class=&quot;text-muted&quot;&gt;Selected perimeter points&lt;/div&gt;
+    &lt;div class=&quot;viz-stat-value&quot; id=&quot;lp-selected&quot;&gt;Select two labelled points&lt;/div&gt;
+    &lt;div class=&quot;text-small text-muted&quot; id=&quot;lp-message&quot;&gt;P1 and the coordinate origin are always at the bottom-left. Points continue every 10 mm (1 cm) around the perimeter.&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;viz-controls&quot;&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Virtual paper
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-paper-size&quot;&gt;&lt;option value=&quot;A5&quot; selected&gt;A5&lt;/option&gt;&lt;option value=&quot;A4&quot;&gt;A4&lt;/option&gt;&lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Paper orientation
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-paper-orientation&quot;&gt;&lt;option value=&quot;portrait&quot; selected&gt;Portrait&lt;/option&gt;&lt;option value=&quot;landscape&quot;&gt;Landscape&lt;/option&gt;&lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Paper corner
+      &lt;select class=&quot;form-select&quot; id=&quot;lp-paper-corner&quot;&gt;&lt;option value=&quot;tl&quot; selected&gt;Top left&lt;/option&gt;&lt;option value=&quot;bl&quot;&gt;Bottom left&lt;/option&gt;&lt;option value=&quot;tr&quot;&gt;Top right&lt;/option&gt;&lt;option value=&quot;br&quot;&gt;Bottom right&lt;/option&gt;&lt;/select&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Left/right margin
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-paper-x-margin&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;2&quot;&gt;
+    &lt;/label&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Top/bottom feed margin
+      &lt;input class=&quot;form-control&quot; id=&quot;lp-paper-y-margin&quot; type=&quot;number&quot; min=&quot;0&quot; step=&quot;1&quot; value=&quot;20&quot;&gt;
+    &lt;/label&gt;
+    &lt;button class=&quot;btn btn-primary&quot; id=&quot;lp-print-paper&quot; type=&quot;button&quot;&gt;Print virtual paper at actual size&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card lp-paper-status&quot;&gt;
+    &lt;div class=&quot;text-muted&quot; id=&quot;lp-paper-summary&quot;&gt;A5 portrait · label at top left · 100% actual size&lt;/div&gt;
+    &lt;div class=&quot;text-small text-muted&quot;&gt;In the printer dialog keep Scale at 100% and disable Fit to page.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;svg id=&quot;lp-print-sheet&quot; role=&quot;img&quot; aria-label=&quot;Actual-size A4 or A5 virtual paper print sheet&quot;&gt;&lt;/svg&gt;
+  &lt;ol class=&quot;text-small lp-assembly&quot;&gt;
+    &lt;li&gt;Cut around the solid outline and hatched chopped edges.&lt;/li&gt;
+    &lt;li&gt;Punch the marked hole centres.&lt;/li&gt;
+    &lt;li&gt;Remove the label backing and paste the front to the hard insert.&lt;/li&gt;
+    &lt;li&gt;Fold on the dashed fold line, paste the back/side, then insert it into the luggage-tag cover.&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+#luggage-point-designer { width:100%; color:var(--foreground); }
+#luggage-point-designer [hidden] { display:none !important; }
+#luggage-point-designer .lp-actions { justify-content:flex-start; margin-block:12px; }
+#luggage-point-designer .lp-canvas { width:100%; }
+#luggage-point-designer #lp-svg { width:100%; height:auto; display:block; touch-action:none; }
+#luggage-point-designer .lp-selection { margin-top:12px; }
+#luggage-point-designer .lp-qr-result { margin-block:12px; }
+#luggage-point-designer .lp-selection .viz-stat-value { margin-block:4px; }
+#luggage-point-designer .grid-line { stroke:var(--border); stroke-width:1; }
+#luggage-point-designer .axis-line { stroke:var(--muted-foreground); stroke-width:1.5; }
+#luggage-point-designer .shape-fill { fill:var(--card); stroke:var(--foreground); stroke-width:3; }
+#luggage-point-designer .cut-line { stroke:var(--destructive); stroke-width:4; }
+#luggage-point-designer .mirror-fill { fill:color-mix(in srgb, var(--viz-series-2) 12%, var(--card)); stroke:var(--viz-series-2); stroke-width:3; }
+#luggage-point-designer .fold-line { stroke:var(--viz-series-3); stroke-width:3; stroke-dasharray:9 6; }
+#luggage-point-designer .text-window { fill:var(--card); stroke:var(--viz-series-4); stroke-width:3; cursor:grab; }
+#luggage-point-designer .text-window:active { cursor:grabbing; }
+#luggage-point-designer .qr-recommendation { fill:url(#lp-qr-pattern); stroke:var(--viz-series-1); stroke-width:5; }
+#luggage-point-designer .decor-fill { fill:url(#lp-decor-pattern); opacity:.45; }
+#luggage-point-designer .cut-hatch { stroke:var(--destructive); stroke-width:2; }
+#luggage-point-designer .perimeter-tick { stroke:var(--destructive); stroke-width:1.5; }
+#luggage-point-designer .punch-mark { stroke:var(--destructive); stroke-width:2; }
+#luggage-point-designer .lp-paper-status { margin-block:12px; }
+#luggage-point-designer #lp-print-sheet { width:100%; height:auto; display:block; background:var(--card); border:1px solid var(--border); }
+#luggage-point-designer .lp-assembly { margin-block:12px; }
+@media print {
+  body * { visibility:hidden !important; }
+  #lp-print-sheet, #lp-print-sheet * { visibility:visible !important; }
+  #lp-print-sheet { position:absolute; left:0; top:0; width:var(--lp-paper-w) !important; height:var(--lp-paper-h) !important; border:0; }
+}
+#luggage-point-designer .point { fill:var(--viz-series-1); stroke:var(--card); stroke-width:2; cursor:pointer; }
+#luggage-point-designer .point-selected { fill:var(--destructive); }
+#luggage-point-designer .hole { fill:var(--background); stroke:var(--viz-series-3); stroke-width:4; cursor:grab; }
+#luggage-point-designer .hole:active { cursor:grabbing; }
+#luggage-point-designer .point-label { fill:var(--foreground); font-size:12px; font-weight:500; pointer-events:none; }
+#luggage-point-designer .coord-label { fill:var(--muted-foreground); font-size:10px; font-weight:400; pointer-events:none; }
+#luggage-point-designer .axis-label { fill:var(--muted-foreground); font-size:11px; font-weight:400; }
+&lt;/style&gt;
+
+&lt;script&gt;
+(() =&gt; {
+  const root=document.getElementById(&#x27;luggage-point-designer&#x27;);
+  const svg=root.querySelector(&#x27;#lp-svg&#x27;);
+  const grid=root.querySelector(&#x27;#lp-grid&#x27;);
+  const art=root.querySelector(&#x27;#lp-art&#x27;);
+  const el=id=&gt;root.querySelector(&#x27;#&#x27;+id);
+  const state={points:[],selected:[],cut:null,overrides:{},unusedImage:null,dragHole:false,dragWindow:null,windowRects:{},windowConfig:{front:{relation:&#x27;below&#x27;,x:20,y:10,w:58,h:8},back:{relation:&#x27;below&#x27;,x:20,y:10,w:58,h:8}},views:null,view:{x:90,y:58,w:580,h:320},dimensions:{w:90,h:50}};
+  const esc=s=&gt;String(s).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g,c=&gt;({&#x27;&amp;&#x27;:&#x27;&amp;amp;&#x27;,&#x27;&lt;&#x27;:&#x27;&amp;lt;&#x27;,&#x27;&gt;&#x27;:&#x27;&amp;gt;&#x27;,&#x27;&quot;&#x27;:&#x27;&amp;quot;&#x27;,&quot;&#x27;&quot;:&#x27;&amp;#39;&#x27;}[c]));
+  const displayUnit=()=&gt;el(&#x27;lp-unit&#x27;).value;
+  const fromInput=v=&gt;displayUnit()===&#x27;cm&#x27;?Number(v)*10:Number(v);
+  const toInput=v=&gt;displayUnit()===&#x27;cm&#x27;?v/10:v;
+  const fmt=v=&gt;`${toInput(v).toFixed(displayUnit()===&#x27;cm&#x27;?1:0)} ${displayUnit()}`;
+
+  function dimensions(){
+    const kind=el(&#x27;lp-shape&#x27;).value;
+    if(kind===&#x27;square&#x27;){const s=fromInput(el(&#x27;lp-side&#x27;).value);return{w:s,h:s,kind};}
+    if(kind===&#x27;circle&#x27;){const r=fromInput(el(&#x27;lp-radius&#x27;).value);return{w:r*2,h:r*2,r,kind};}
+    return{w:fromInput(el(&#x27;lp-width&#x27;).value),h:fromInput(el(&#x27;lp-height&#x27;).value),kind};
+  }
+
+  function perimeterPoints(d){
+    const out=[];
+    if(d.kind===&#x27;circle&#x27;){
+      const circumference=2*Math.PI*d.r;
+      const count=Math.max(8,Math.round(circumference/10));
+      for(let i=0;i&lt;count;i++){const a=-Math.PI/2+i*2*Math.PI/count;out.push({x:d.r+d.r*Math.cos(a),y:d.r+d.r*Math.sin(a)});}
+      return out;
+    }
+    for(let x=0;x&lt;d.w;x+=10)out.push({x,y:0});
+    out.push({x:d.w,y:0});
+    for(let y=10;y&lt;d.h;y+=10)out.push({x:d.w,y});
+    out.push({x:d.w,y:d.h});
+    for(let x=d.w-10;x&gt;0;x-=10)out.push({x,y:d.h});
+    out.push({x:0,y:d.h});
+    for(let y=d.h-10;y&gt;0;y-=10)out.push({x:0,y});
+    return out;
+  }
+
+  function mapIn(p,view){const d=state.dimensions,s=Math.min(view.w/d.w,view.h/d.h),left=view.x+(view.w-d.w*s)/2,top=view.y+(view.h-d.h*s)/2;return{x:left+p.x*s,y:top+(d.h-p.y)*s,s};}
+  function unmapIn(x,y,view){const d=state.dimensions,m=mapIn({x:0,y:d.h},view);return{x:(x-m.x)/m.s,y:d.h-(y-m.y)/m.s};}
+  function map(p){return mapIn(p,state.view);}
+  function unmap(x,y){return unmapIn(x,y,state.view);}
+  function svgPoint(evt){const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;return p.matrixTransform(svg.getScreenCTM().inverse());}
+
+  function retainedPolygon(points,a,b){
+    const n=points.length,arc1=[];let i=a;while(true){arc1.push(points[i]);if(i===b)break;i=(i+1)%n;}
+    const arc2=[];i=b;while(true){arc2.push(points[i]);if(i===a)break;i=(i+1)%n;}
+    return arc1.length&gt;=arc2.length?arc1:arc2;
+  }
+
+  function pointInPolygon(p,poly){
+    let inside=false;
+    for(let i=0,j=poly.length-1;i&lt;poly.length;j=i++){
+      const a=poly[i],b=poly[j];
+      const cross=(p.y-a.y)*(b.x-a.x)-(p.x-a.x)*(b.y-a.y);
+      if(Math.abs(cross)&lt;.001&amp;&amp;p.x&gt;=Math.min(a.x,b.x)-.001&amp;&amp;p.x&lt;=Math.max(a.x,b.x)+.001&amp;&amp;p.y&gt;=Math.min(a.y,b.y)-.001&amp;&amp;p.y&lt;=Math.max(a.y,b.y)+.001)return true;
+      if(((a.y&gt;p.y)!==(b.y&gt;p.y))&amp;&amp;(p.x&lt;(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x))inside=!inside;
+    }
+    return inside;
+  }
+
+  function rectInside(rect,poly){
+    return [[rect.x,rect.y],[rect.x+rect.w,rect.y],[rect.x,rect.y+rect.h],[rect.x+rect.w,rect.y+rect.h],[rect.x+rect.w/2,rect.y+rect.h/2]].every(([x,y])=&gt;pointInPolygon({x,y},poly));
+  }
+
+  function circleHitsRect(hole,rect,pad=0){
+    const nx=Math.max(rect.x-pad,Math.min(hole.x,rect.x+rect.w+pad)),ny=Math.max(rect.y-pad,Math.min(hole.y,rect.y+rect.h+pad));
+    return (nx-hole.x)**2+(ny-hole.y)**2&lt;(hole.d/2+pad)**2;
+  }
+
+  function rectsOverlap(a,b,pad=0){return a.x&lt;b.x+b.w+pad&amp;&amp;a.x+a.w+pad&gt;b.x&amp;&amp;a.y&lt;b.y+b.h+pad&amp;&amp;a.y+a.h+pad&gt;b.y;}
+
+  function windowForQr(q,relation,w,h,gap,customX,customY){
+    if(relation===&#x27;custom&#x27;)return{x:customX,y:customY,w,h};
+    if(relation===&#x27;overlap&#x27;)return{x:q.x+(q.w-w)/2,y:q.y+(q.h-h)/2,w,h};
+    if(relation===&#x27;below&#x27;)return{x:q.x+(q.w-w)/2,y:q.y-gap-h,w,h};
+    if(relation===&#x27;above&#x27;)return{x:q.x+(q.w-w)/2,y:q.y+q.h+gap,w,h};
+    if(relation===&#x27;left&#x27;)return{x:q.x-gap-w,y:q.y+(q.h-h)/2,w,h};
+    return{x:q.x+q.w+gap,y:q.y+(q.h-h)/2,w,h};
+  }
+
+  function bestQr(poly,hole,needWindow,relation,windowW,windowH,customX=0,customY=0){
+    const d=state.dimensions,quiet=2,gap=2,max=Math.floor(Math.min(d.w,d.h)-quiet*2);
+    for(let s=max;s&gt;=10;s-=1){
+      for(let y=quiet;y+s&lt;=d.h-quiet+.01;y+=1){
+        for(let x=quiet;x+s&lt;=d.w-quiet+.01;x+=1){
+          const q={x,y,w:s,h:s},protectedBox={x:x-quiet,y:y-quiet,w:s+quiet*2,h:s+quiet*2};
+          if(!rectInside(protectedBox,poly)||circleHitsRect(hole,protectedBox,.5))continue;
+          const win=needWindow?windowForQr(q,relation,windowW,windowH,gap,customX,customY):null;
+          if(win&amp;&amp;!rectInside(win,poly))continue;
+          if(win&amp;&amp;relation!==&#x27;overlap&#x27;&amp;&amp;circleHitsRect(hole,win,.5))continue;
+          if(win&amp;&amp;relation===&#x27;custom&#x27;&amp;&amp;rectsOverlap(q,win,gap))continue;
+          return{q,win,quiet};
+        }
+      }
+    }
+    return{q:null,win:needWindow&amp;&amp;relation===&#x27;custom&#x27;?{x:customX,y:customY,w:windowW,h:windowH}:null,quiet};
+  }
+
+  function drawGrid(){
+    let html=&#x27;&#x27;;
+    for(let x=state.view.x;x&lt;=state.view.x+state.view.w;x+=58)html+=`&lt;line class=&quot;grid-line&quot; x1=&quot;${x}&quot; y1=&quot;${state.view.y}&quot; x2=&quot;${x}&quot; y2=&quot;${state.view.y+state.view.h}&quot;/&gt;`;
+    for(let y=state.view.y;y&lt;=state.view.y+state.view.h;y+=53)html+=`&lt;line class=&quot;grid-line&quot; x1=&quot;${state.view.x}&quot; y1=&quot;${y}&quot; x2=&quot;${state.view.x+state.view.w}&quot; y2=&quot;${y}&quot;/&gt;`;
+    const origin=map({x:0,y:0});
+    html+=`&lt;text class=&quot;axis-label&quot; x=&quot;${origin.x-4}&quot; y=&quot;${origin.y+24}&quot;&gt;(0,0) · P1&lt;/text&gt;&lt;text class=&quot;axis-label&quot; x=&quot;${state.view.x+state.view.w}&quot; y=&quot;${state.view.y+state.view.h+28}&quot; text-anchor=&quot;end&quot;&gt;X →&lt;/text&gt;&lt;text class=&quot;axis-label&quot; x=&quot;${state.view.x-28}&quot; y=&quot;${state.view.y+12}&quot;&gt;Y ↑&lt;/text&gt;`;
+    grid.innerHTML=html;
+  }
+
+  function layoutViews(){
+    if(!el(&#x27;lp-show-mirror&#x27;).checked)return{front:{x:90,y:58,w:580,h:320},back:null};
+    const side=el(&#x27;lp-mirror-side&#x27;).value;
+    if(side===&#x27;bottom&#x27;)return{front:{x:95,y:35,w:570,h:170},back:{x:95,y:250,w:570,h:170}};
+    if(side===&#x27;top&#x27;)return{front:{x:95,y:250,w:570,h:170},back:{x:95,y:35,w:570,h:170}};
+    if(side===&#x27;right&#x27;)return{front:{x:35,y:85,w:315,h:275},back:{x:410,y:85,w:315,h:275}};
+    return{front:{x:410,y:85,w:315,h:275},back:{x:35,y:85,w:315,h:275}};
+  }
+
+  function mirrorCoordinate(p,side,d){
+    return side===&#x27;bottom&#x27;||side===&#x27;top&#x27;?{x:p.x,y:d.h-p.y}:{x:d.w-p.x,y:p.y};
+  }
+
+  function textWindowMarkup(view,label,rect){
+    if(!rect)return&#x27;&#x27;;const topLeft=mapIn({x:rect.x,y:rect.y+rect.h},view),key=label.toLowerCase();state.windowRects[key]={rect:{...rect},view};
+    return `&lt;rect class=&quot;text-window&quot; data-window-side=&quot;${key}&quot; x=&quot;${topLeft.x}&quot; y=&quot;${topLeft.y}&quot; width=&quot;${rect.w*topLeft.s}&quot; height=&quot;${rect.h*topLeft.s}&quot; rx=&quot;5&quot;/&gt;&lt;text class=&quot;coord-label&quot; x=&quot;${topLeft.x+rect.w*topLeft.s/2}&quot; y=&quot;${topLeft.y+rect.h*topLeft.s/2+4}&quot; text-anchor=&quot;middle&quot;&gt;${label} window · bottom-left (${toInput(rect.x).toFixed(1)}, ${toInput(rect.y).toFixed(1)}) ${displayUnit()}&lt;/text&gt;`;
+  }
+
+  function qrMarkup(view,result,label){
+    if(!result.q)return&#x27;&#x27;;const q=result.q,topLeft=mapIn({x:q.x,y:q.y+q.h},view);
+    return `&lt;rect class=&quot;qr-recommendation&quot; x=&quot;${topLeft.x}&quot; y=&quot;${topLeft.y}&quot; width=&quot;${q.w*topLeft.s}&quot; height=&quot;${q.h*topLeft.s}&quot;/&gt;&lt;text class=&quot;point-label&quot; x=&quot;${topLeft.x+q.w*topLeft.s/2}&quot; y=&quot;${topLeft.y+q.h*topLeft.s/2}&quot; text-anchor=&quot;middle&quot;&gt;${label} QR H · ${toInput(q.w).toFixed(1)} ${displayUnit()}&lt;/text&gt;`;
+  }
+
+  function cutGuideMarkup(a,b){
+    const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(!len)return&#x27;&#x27;;const nx=-dy/len,ny=dx/len;let out=&#x27;&#x27;;
+    for(let t=8;t&lt;len;t+=12){const x=a.x+dx*t/len,y=a.y+dy*t/len;out+=`&lt;line class=&quot;cut-hatch&quot; x1=&quot;${x-nx*5}&quot; y1=&quot;${y-ny*5}&quot; x2=&quot;${x+nx*5}&quot; y2=&quot;${y+ny*5}&quot;/&gt;`;}
+    return out;
+  }
+
+  function perimeterGuideMarkup(points){
+    let out=&#x27;&#x27;;for(let i=0;i&lt;points.length;i++){const a=points[i],b=points[(i+1)%points.length],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(!len)continue;const nx=-dy/len,ny=dx/len;for(let t=6;t&lt;len;t+=12){const x=a.x+dx*t/len,y=a.y+dy*t/len;out+=`&lt;line class=&quot;perimeter-tick&quot; x1=&quot;${x-nx*3.5}&quot; y1=&quot;${y-ny*3.5}&quot; x2=&quot;${x+nx*3.5}&quot; y2=&quot;${y+ny*3.5}&quot;/&gt;`;}}return out;
+  }
+
+  function punchMarkup(m,label){
+    return `&lt;line class=&quot;punch-mark&quot; x1=&quot;${m.x-12}&quot; y1=&quot;${m.y}&quot; x2=&quot;${m.x+12}&quot; y2=&quot;${m.y}&quot;/&gt;&lt;line class=&quot;punch-mark&quot; x1=&quot;${m.x}&quot; y1=&quot;${m.y-12}&quot; x2=&quot;${m.x}&quot; y2=&quot;${m.y+12}&quot;/&gt;&lt;text class=&quot;coord-label&quot; x=&quot;${m.x+14}&quot; y=&quot;${m.y-12}&quot;&gt;${label} punch centre&lt;/text&gt;`;
+  }
+
+  function remainingContentMarkup(view,result,label){
+    if(!result.win)return&#x27;&#x27;;const mode=el(&#x27;lp-unused-mode&#x27;).value;if(mode!==&#x27;text&#x27;&amp;&amp;mode!==&#x27;image&#x27;)return&#x27;&#x27;;
+    const r=result.win,tl=mapIn({x:r.x,y:r.y+r.h},view),w=r.w*tl.s,h=r.h*tl.s;
+    if(mode===&#x27;image&#x27;&amp;&amp;state.unusedImage)return`&lt;image href=&quot;${state.unusedImage}&quot; x=&quot;${tl.x+3}&quot; y=&quot;${tl.y+3}&quot; width=&quot;${Math.max(1,w-6)}&quot; height=&quot;${Math.max(1,h-6)}&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; pointer-events=&quot;none&quot;/&gt;`;
+    if(mode===&#x27;text&#x27;){const text=esc(el(&#x27;lp-unused-text&#x27;).value||&#x27;Text&#x27;);return`&lt;text class=&quot;point-label&quot; x=&quot;${tl.x+w/2}&quot; y=&quot;${tl.y+h/2+4}&quot; text-anchor=&quot;middle&quot;&gt;${text}&lt;/text&gt;`;}
+    return&#x27;&#x27;;
+  }
+
+  function resultText(label,result){
+    if(!result.q)return`${label}: no safe QR fit`;
+    const q=result.q;return`${label}: ${toInput(q.w).toFixed(1)} × ${toInput(q.h).toFixed(1)} ${displayUnit()} at X ${toInput(q.x).toFixed(1)}, Y ${toInput(q.y).toFixed(1)}`;
+  }
+
+  function paperPoint(p,offset,d){return{x:offset.x+p.x,y:offset.y+d.h-p.y};}
+  function paperPolygon(poly,offset,d){return poly.map(p=&gt;{const m=paperPoint(p,offset,d);return`${m.x},${m.y}`;}).join(&#x27; &#x27;);}
+  function paperRect(rect,offset,d,cls){if(!rect)return&#x27;&#x27;;return`&lt;rect class=&quot;${cls}&quot; x=&quot;${offset.x+rect.x}&quot; y=&quot;${offset.y+d.h-rect.y-rect.h}&quot; width=&quot;${rect.w}&quot; height=&quot;${rect.h}&quot;/&gt;`;}
+  function paperCut(a,b){const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(!len)return&#x27;&#x27;;const nx=-dy/len,ny=dx/len;let out=`&lt;line class=&quot;paper-cut&quot; x1=&quot;${a.x}&quot; y1=&quot;${a.y}&quot; x2=&quot;${b.x}&quot; y2=&quot;${b.y}&quot;/&gt;`;for(let t=2;t&lt;len;t+=2){const x=a.x+dx*t/len,y=a.y+dy*t/len;out+=`&lt;line class=&quot;paper-hatch&quot; x1=&quot;${x-nx}&quot; y1=&quot;${y-ny}&quot; x2=&quot;${x+nx}&quot; y2=&quot;${y+ny}&quot;/&gt;`;}return out;}
+  function paperPerimeter(poly,offset,d){const pts=poly.map(p=&gt;paperPoint(p,offset,d));let out=&#x27;&#x27;;for(let i=0;i&lt;pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(!len)continue;const nx=-dy/len,ny=dx/len;for(let t=1.5;t&lt;len;t+=2.5){const x=a.x+dx*t/len,y=a.y+dy*t/len;out+=`&lt;line class=&quot;paper-perimeter&quot; x1=&quot;${x-nx*.7}&quot; y1=&quot;${y-ny*.7}&quot; x2=&quot;${x+nx*.7}&quot; y2=&quot;${y+ny*.7}&quot;/&gt;`;}}return out;}
+  function paperHole(hole,offset,d,label){const p=paperPoint(hole,offset,d),r=hole.d/2;return`&lt;circle class=&quot;paper-hole&quot; cx=&quot;${p.x}&quot; cy=&quot;${p.y}&quot; r=&quot;${r}&quot;/&gt;&lt;line class=&quot;paper-punch&quot; x1=&quot;${p.x-r-2}&quot; y1=&quot;${p.y}&quot; x2=&quot;${p.x+r+2}&quot; y2=&quot;${p.y}&quot;/&gt;&lt;line class=&quot;paper-punch&quot; x1=&quot;${p.x}&quot; y1=&quot;${p.y-r-2}&quot; x2=&quot;${p.x}&quot; y2=&quot;${p.y+r+2}&quot;/&gt;&lt;text class=&quot;paper-note&quot; x=&quot;${p.x+r+2.5}&quot; y=&quot;${p.y-r-1}&quot;&gt;${label} punch&lt;/text&gt;`;}
+
+  function renderPaper(outline,hole,frontResult,backOutline,backHole,backResult){
+    const paper=el(&#x27;lp-print-sheet&#x27;),paperName=el(&#x27;lp-paper-size&#x27;).value,orientation=el(&#x27;lp-paper-orientation&#x27;).value,base=paperName===&#x27;A4&#x27;?{w:210,h:297}:{w:148,h:210},pw=orientation===&#x27;portrait&#x27;?base.w:base.h,ph=orientation===&#x27;portrait&#x27;?base.h:base.w,d=state.dimensions,gap=fromInput(el(&#x27;lp-fold-gap&#x27;).value),side=el(&#x27;lp-mirror-side&#x27;).value,hasBack=!!backOutline;
+    let frontOffset={x:0,y:0},backOffset=null,labelW=d.w,labelH=d.h;
+    if(hasBack&amp;&amp;(side===&#x27;bottom&#x27;||side===&#x27;top&#x27;)){labelH=d.h*2+gap;if(side===&#x27;bottom&#x27;)backOffset={x:0,y:d.h+gap};else{backOffset={x:0,y:0};frontOffset={x:0,y:d.h+gap};}}
+    if(hasBack&amp;&amp;(side===&#x27;left&#x27;||side===&#x27;right&#x27;)){labelW=d.w*2+gap;if(side===&#x27;right&#x27;)backOffset={x:d.w+gap,y:0};else{backOffset={x:0,y:0};frontOffset={x:d.w+gap,y:0};}}
+    const corner=el(&#x27;lp-paper-corner&#x27;).value,mx=fromInput(el(&#x27;lp-paper-x-margin&#x27;).value),my=fromInput(el(&#x27;lp-paper-y-margin&#x27;).value),origin={x:corner.endsWith(&#x27;r&#x27;)?pw-mx-labelW:mx,y:corner.startsWith(&#x27;b&#x27;)?ph-my-labelH:my};
+    frontOffset={x:origin.x+frontOffset.x,y:origin.y+frontOffset.y};if(backOffset)backOffset={x:origin.x+backOffset.x,y:origin.y+backOffset.y};
+    const decorate=el(&#x27;lp-unused-mode&#x27;).value===&#x27;decor&#x27;,frontWindow=frontResult?.win,backWindow=backResult?.win;
+    let label=`&lt;polygon class=&quot;paper-shape&quot; points=&quot;${paperPolygon(outline,frontOffset,d)}&quot;/&gt;${decorate?`&lt;polygon class=&quot;paper-decor&quot; points=&quot;${paperPolygon(outline,frontOffset,d)}&quot;/&gt;`:&#x27;&#x27;}${paperPerimeter(outline,frontOffset,d)}${paperRect(frontResult?.q,frontOffset,d,&#x27;paper-qr&#x27;)}${paperRect(frontWindow,frontOffset,d,&#x27;paper-window&#x27;)}${paperHole(hole,frontOffset,d,&#x27;Front&#x27;)}`;
+    if(state.cut){const a=paperPoint(state.points[state.cut[0]],frontOffset,d),b=paperPoint(state.points[state.cut[1]],frontOffset,d);label+=paperCut(a,b);}
+    if(backOffset&amp;&amp;backOutline){label+=`&lt;polygon class=&quot;paper-shape&quot; points=&quot;${paperPolygon(backOutline,backOffset,d)}&quot;/&gt;${decorate?`&lt;polygon class=&quot;paper-decor&quot; points=&quot;${paperPolygon(backOutline,backOffset,d)}&quot;/&gt;`:&#x27;&#x27;}${paperPerimeter(backOutline,backOffset,d)}${paperRect(backResult?.q,backOffset,d,&#x27;paper-qr&#x27;)}${paperRect(backWindow,backOffset,d,&#x27;paper-window&#x27;)}${paperHole(backHole,backOffset,d,&#x27;Back&#x27;)}`;
+      if(state.cut){const a=paperPoint(backOutline[0],backOffset,d);const mirrorSide=side,ca=paperPoint(mirrorCoordinate(state.points[state.cut[0]],mirrorSide,d),backOffset,d),cb=paperPoint(mirrorCoordinate(state.points[state.cut[1]],mirrorSide,d),backOffset,d);label+=paperCut(ca,cb);}
+      if(side===&#x27;bottom&#x27;||side===&#x27;top&#x27;){const fy=origin.y+d.h+gap/2;label+=`&lt;line class=&quot;paper-fold&quot; x1=&quot;${origin.x}&quot; y1=&quot;${fy}&quot; x2=&quot;${origin.x+d.w}&quot; y2=&quot;${fy}&quot;/&gt;`;}
+      else{const fx=origin.x+d.w+gap/2;label+=`&lt;line class=&quot;paper-fold&quot; x1=&quot;${fx}&quot; y1=&quot;${origin.y}&quot; x2=&quot;${fx}&quot; y2=&quot;${origin.y+d.h}&quot;/&gt;`;}
+    }
+    const fits=origin.x&gt;=0&amp;&amp;origin.y&gt;=0&amp;&amp;origin.x+labelW&lt;=pw&amp;&amp;origin.y+labelH&lt;=ph;
+    paper.setAttribute(&#x27;viewBox&#x27;,`0 0 ${pw} ${ph}`);paper.setAttribute(&#x27;width&#x27;,`${pw}mm`);paper.setAttribute(&#x27;height&#x27;,`${ph}mm`);paper.style.setProperty(&#x27;--lp-paper-w&#x27;,`${pw}mm`);paper.style.setProperty(&#x27;--lp-paper-h&#x27;,`${ph}mm`);
+    paper.innerHTML=`&lt;defs&gt;&lt;pattern id=&quot;lp-paper-qr&quot; width=&quot;1.8&quot; height=&quot;1.8&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;&lt;rect width=&quot;1.8&quot; height=&quot;1.8&quot; fill=&quot;var(--card)&quot;/&gt;&lt;rect width=&quot;.9&quot; height=&quot;.9&quot; fill=&quot;var(--foreground)&quot;/&gt;&lt;rect x=&quot;1.1&quot; y=&quot;.5&quot; width=&quot;.5&quot; height=&quot;.5&quot; fill=&quot;var(--foreground)&quot;/&gt;&lt;/pattern&gt;&lt;pattern id=&quot;lp-paper-decor&quot; width=&quot;2.4&quot; height=&quot;2.4&quot; patternUnits=&quot;userSpaceOnUse&quot;&gt;&lt;rect width=&quot;2.4&quot; height=&quot;2.4&quot; fill=&quot;var(--card)&quot;/&gt;&lt;circle cx=&quot;.5&quot; cy=&quot;.5&quot; r=&quot;.3&quot; fill=&quot;var(--muted-foreground)&quot;/&gt;&lt;rect x=&quot;1.3&quot; y=&quot;.3&quot; width=&quot;.7&quot; height=&quot;.7&quot; fill=&quot;var(--muted-foreground)&quot;/&gt;&lt;/pattern&gt;&lt;/defs&gt;&lt;style&gt;.paper-shape{fill:var(--card);stroke:var(--foreground);stroke-width:.3}.paper-qr{fill:url(#lp-paper-qr);stroke:var(--foreground);stroke-width:.5}.paper-window{fill:var(--card);stroke:var(--muted-foreground);stroke-width:.35}.paper-hole{fill:var(--card);stroke:var(--foreground);stroke-width:.35}.paper-punch,.paper-cut,.paper-hatch,.paper-perimeter{stroke:var(--destructive);stroke-width:.25}.paper-fold{stroke:var(--viz-series-3);stroke-width:.3;stroke-dasharray:2 1}.paper-note{font:1.8px sans-serif;fill:var(--foreground)}.paper-decor{fill:url(#lp-paper-decor);opacity:.5}&lt;/style&gt;${label}`;
+    el(&#x27;lp-dynamic-page-style&#x27;).textContent=`@page{size:${paperName} ${orientation};margin:0}`;
+    el(&#x27;lp-paper-summary&#x27;).textContent=`${paperName} ${orientation} · ${corner.endsWith(&#x27;r&#x27;)?&#x27;right&#x27;:&#x27;left&#x27;} corner · unfolded label ${toInput(labelW).toFixed(1)} × ${toInput(labelH).toFixed(1)} ${displayUnit()} · 100% actual size${fits?&#x27;&#x27;:&#x27; · DOES NOT FIT PAPER&#x27;}`;
+  }
+
+  function render(resetCut=false){
+    const d=dimensions();state.dimensions=d;if(resetCut){state.cut=null;state.selected=[];state.overrides={};}
+    const textNeeded=el(&#x27;lp-text-needed&#x27;).checked,textSide=el(&#x27;lp-text-side&#x27;).value;
+    if(textNeeded&amp;&amp;textSide!==&#x27;front&#x27;)el(&#x27;lp-show-mirror&#x27;).checked=true;
+    const views=layoutViews();state.views=views;state.view=views.front;state.windowRects={};
+    state.points=perimeterPoints(d).map((p,i)=&gt;state.overrides[i]?{...p,...state.overrides[i]}:p);
+    const outline=state.cut?retainedPolygon(state.points,state.cut[0],state.cut[1]):state.points;
+    const hx=fromInput(el(&#x27;lp-hole-x&#x27;).value),hy=fromInput(el(&#x27;lp-hole-y&#x27;).value),hd=fromInput(el(&#x27;lp-hole-d&#x27;).value),hole={x:hx,y:hy,d:hd};
+    const fcfg=state.windowConfig.front,bcfg=state.windowConfig.back;
+    const frontNeedsWindow=textNeeded&amp;&amp;(textSide===&#x27;front&#x27;||textSide===&#x27;both&#x27;);
+    const frontResult=bestQr(outline,hole,frontNeedsWindow,fcfg.relation,fcfg.w,fcfg.h,fcfg.x,fcfg.y);
+    const frontWithout=bestQr(outline,hole,false,fcfg.relation,fcfg.w,fcfg.h,fcfg.x,fcfg.y),frontWith=bestQr(outline,hole,true,fcfg.relation,fcfg.w,fcfg.h,fcfg.x,fcfg.y);
+    const mapped=outline.map(map);
+    const outlineAttr=mapped.map(p=&gt;`${p.x},${p.y}`).join(&#x27; &#x27;);
+    let html=`&lt;polygon class=&quot;shape-fill&quot; points=&quot;${outlineAttr}&quot;/&gt;`;
+    if(el(&#x27;lp-unused-mode&#x27;).value===&#x27;decor&#x27;)html+=`&lt;polygon class=&quot;decor-fill&quot; points=&quot;${outlineAttr}&quot;/&gt;`;
+    html+=perimeterGuideMarkup(mapped);
+    if(state.cut){const a=map(state.points[state.cut[0]]),b=map(state.points[state.cut[1]]);html+=`&lt;line class=&quot;cut-line&quot; x1=&quot;${a.x}&quot; y1=&quot;${a.y}&quot; x2=&quot;${b.x}&quot; y2=&quot;${b.y}&quot;/&gt;${cutGuideMarkup(a,b)}`;}
+    html+=qrMarkup(views.front,frontResult,&#x27;Front&#x27;);
+    if(frontNeedsWindow)html+=textWindowMarkup(views.front,&#x27;Front&#x27;,frontResult.win)+remainingContentMarkup(views.front,frontResult,&#x27;Front&#x27;);
+    state.points.forEach((p,i)=&gt;{
+      const m=map(p),selected=state.selected.includes(i);
+      html+=`&lt;circle class=&quot;point${selected?&#x27; point-selected&#x27;:&#x27;&#x27;}&quot; data-point=&quot;${i}&quot; cx=&quot;${m.x}&quot; cy=&quot;${m.y}&quot; r=&quot;6&quot;/&gt;&lt;text class=&quot;point-label&quot; x=&quot;${m.x+8}&quot; y=&quot;${m.y-8}&quot;&gt;P${i+1}&lt;/text&gt;`;
+    });
+    const hm=map({x:hx,y:hy});
+    html+=`&lt;circle class=&quot;hole&quot; id=&quot;lp-hole&quot; cx=&quot;${hm.x}&quot; cy=&quot;${hm.y}&quot; r=&quot;${Math.max(5,hd*hm.s/2)}&quot;/&gt;${punchMarkup(hm,&#x27;Front&#x27;)}&lt;text class=&quot;coord-label&quot; x=&quot;${hm.x+12}&quot; y=&quot;${hm.y+17}&quot;&gt;centre (${toInput(hx).toFixed(1)}, ${toInput(hy).toFixed(1)}) ${displayUnit()}&lt;/text&gt;`;
+    let backResult=null;
+    let backWithout=null,backWith=null;
+    let paperBackOutline=null,paperBackHole=null;
+    if(views.back){
+      const side=el(&#x27;lp-mirror-side&#x27;).value,mirrored=outline.map(p=&gt;mirrorCoordinate(p,side,d)),mappedBack=mirrored.map(p=&gt;mapIn(p,views.back)),mh=mirrorCoordinate({x:hx,y:hy},side,d),mhm=mapIn(mh,views.back);
+      paperBackOutline=mirrored;paperBackHole={x:mh.x,y:mh.y,d:hd};
+      const backNeedsWindow=textNeeded&amp;&amp;(textSide===&#x27;back&#x27;||textSide===&#x27;both&#x27;);
+      backResult=bestQr(mirrored,{x:mh.x,y:mh.y,d:hd},backNeedsWindow,bcfg.relation,bcfg.w,bcfg.h,bcfg.x,bcfg.y);
+      backWithout=bestQr(mirrored,{x:mh.x,y:mh.y,d:hd},false,bcfg.relation,bcfg.w,bcfg.h,bcfg.x,bcfg.y);backWith=bestQr(mirrored,{x:mh.x,y:mh.y,d:hd},true,bcfg.relation,bcfg.w,bcfg.h,bcfg.x,bcfg.y);
+      const backAttr=mappedBack.map(p=&gt;`${p.x},${p.y}`).join(&#x27; &#x27;);
+      html+=`&lt;polygon class=&quot;mirror-fill&quot; points=&quot;${backAttr}&quot;/&gt;${el(&#x27;lp-unused-mode&#x27;).value===&#x27;decor&#x27;?`&lt;polygon class=&quot;decor-fill&quot; points=&quot;${backAttr}&quot;/&gt;`:&#x27;&#x27;}${perimeterGuideMarkup(mappedBack)}&lt;circle class=&quot;hole&quot; cx=&quot;${mhm.x}&quot; cy=&quot;${mhm.y}&quot; r=&quot;${Math.max(5,hd*mhm.s/2)}&quot;/&gt;${punchMarkup(mhm,&#x27;Back&#x27;)}&lt;text class=&quot;coord-label&quot; x=&quot;${mhm.x+12}&quot; y=&quot;${mhm.y+17}&quot;&gt;mirrored hole (${toInput(mh.x).toFixed(1)}, ${toInput(mh.y).toFixed(1)}) ${displayUnit()}&lt;/text&gt;&lt;text class=&quot;point-label&quot; x=&quot;${views.back.x+views.back.w/2}&quot; y=&quot;${views.back.y-10}&quot; text-anchor=&quot;middle&quot;&gt;MIRRORED BACK&lt;/text&gt;`;
+      if(state.cut){const ca=mapIn(mirrorCoordinate(state.points[state.cut[0]],side,d),views.back),cb=mapIn(mirrorCoordinate(state.points[state.cut[1]],side,d),views.back);html+=`&lt;line class=&quot;cut-line&quot; x1=&quot;${ca.x}&quot; y1=&quot;${ca.y}&quot; x2=&quot;${cb.x}&quot; y2=&quot;${cb.y}&quot;/&gt;${cutGuideMarkup(ca,cb)}`;}
+      html+=qrMarkup(views.back,backResult,&#x27;Back&#x27;);
+      if(backNeedsWindow)html+=textWindowMarkup(views.back,&#x27;Back&#x27;,backResult.win)+remainingContentMarkup(views.back,backResult,&#x27;Back&#x27;);
+      if(side===&#x27;bottom&#x27;||side===&#x27;top&#x27;){const fy=(views.front.y+views.front.h+views.back.y)/2;html+=`&lt;line class=&quot;fold-line&quot; x1=&quot;${views.front.x}&quot; y1=&quot;${fy}&quot; x2=&quot;${views.front.x+views.front.w}&quot; y2=&quot;${fy}&quot;/&gt;&lt;text class=&quot;coord-label&quot; x=&quot;${views.front.x+views.front.w/2}&quot; y=&quot;${fy-7}&quot; text-anchor=&quot;middle&quot;&gt;fold allowance ${el(&#x27;lp-fold-gap&#x27;).value} ${displayUnit()}&lt;/text&gt;`;}
+      else{const fx=(views.front.x+views.front.w+views.back.x)/2;html+=`&lt;line class=&quot;fold-line&quot; x1=&quot;${fx}&quot; y1=&quot;${views.front.y}&quot; x2=&quot;${fx}&quot; y2=&quot;${views.front.y+views.front.h}&quot;/&gt;&lt;text class=&quot;coord-label&quot; x=&quot;${fx+8}&quot; y=&quot;${views.front.y+views.front.h/2}&quot;&gt;fold ${el(&#x27;lp-fold-gap&#x27;).value} ${displayUnit()}&lt;/text&gt;`;}
+    }
+    if(frontNeedsWindow&amp;&amp;frontResult.win&amp;&amp;fcfg.relation!==&#x27;custom&#x27;){fcfg.x=frontResult.win.x;fcfg.y=frontResult.win.y;}
+    if(backResult?.win&amp;&amp;bcfg.relation!==&#x27;custom&#x27;){bcfg.x=backResult.win.x;bcfg.y=backResult.win.y;}
+    const sizes=[`Front ${frontResult.q?toInput(frontResult.q.w).toFixed(1)+&#x27; × &#x27;+toInput(frontResult.q.h).toFixed(1)+&#x27; &#x27;+displayUnit():&#x27;no safe fit&#x27;}`];
+    if(backResult)sizes.push(`Back ${backResult.q?toInput(backResult.q.w).toFixed(1)+&#x27; × &#x27;+toInput(backResult.q.h).toFixed(1)+&#x27; &#x27;+displayUnit():&#x27;no safe fit&#x27;}`);
+    el(&#x27;lp-qr-size&#x27;).textContent=sizes.join(&#x27; · &#x27;);
+    const overlapUsed=textNeeded&amp;&amp;((frontNeedsWindow&amp;&amp;fcfg.relation===&#x27;overlap&#x27;)||((textSide===&#x27;back&#x27;||textSide===&#x27;both&#x27;)&amp;&amp;bcfg.relation===&#x27;overlap&#x27;));
+    el(&#x27;lp-qr-note&#x27;).textContent=overlapUsed?&#x27;Overlap uses the largest square, but the final generated QR must pass a real scan test because the window covers data modules.&#x27;:&#x27;The QR avoids the hole, polygon edge, text window and a 2 mm quiet zone.&#x27;;
+    const compare=[resultText(&#x27;Front without window&#x27;,frontWithout),resultText(&#x27;Front with window&#x27;,frontWith)];
+    if(backWithout&amp;&amp;backWith)compare.push(resultText(&#x27;Back without window&#x27;,backWithout),resultText(&#x27;Back with window&#x27;,backWith));
+    el(&#x27;lp-qr-comparison&#x27;).innerHTML=compare.map(t=&gt;`&lt;div&gt;${esc(t)}&lt;/div&gt;`).join(&#x27;&#x27;);
+    renderPaper(outline,hole,frontResult,paperBackOutline,paperBackHole,backResult);
+    html+=`&lt;text class=&quot;point-label&quot; x=&quot;${views.front.x+views.front.w/2}&quot; y=&quot;${views.front.y-10}&quot; text-anchor=&quot;middle&quot;&gt;FRONT&lt;/text&gt;`;
+    art.innerHTML=html;drawGrid();
+    art.querySelectorAll(&#x27;[data-point]&#x27;).forEach(node=&gt;node.addEventListener(&#x27;click&#x27;,()=&gt;selectPoint(Number(node.dataset.point))));
+    art.querySelector(&#x27;#lp-hole&#x27;).addEventListener(&#x27;pointerdown&#x27;,e=&gt;{state.dragHole=true;svg.setPointerCapture(e.pointerId);e.preventDefault();});
+    art.querySelectorAll(&#x27;[data-window-side]&#x27;).forEach(node=&gt;node.addEventListener(&#x27;pointerdown&#x27;,e=&gt;{const side=node.dataset.windowSide,info=state.windowRects[side],s=svgPoint(e),p=unmapIn(s.x,s.y,info.view);el(&#x27;lp-edit-window-side&#x27;).value=side;syncWindowEditor();state.dragWindow={side,dx:p.x-info.rect.x,dy:p.y-info.rect.y};svg.setPointerCapture(e.pointerId);e.preventDefault();}));
+    el(&#x27;lp-join&#x27;).disabled=state.selected.length!==2;el(&#x27;lp-undo&#x27;).disabled=!state.cut;
+    const labels=state.selected.map(i=&gt;{const p=state.points[i];return`P${i+1} (${toInput(p.x).toFixed(1)}, ${toInput(p.y).toFixed(1)}) ${displayUnit()}`;});
+    el(&#x27;lp-selected&#x27;).textContent=labels.length?labels.join(&#x27; → &#x27;):&#x27;Select two labelled points&#x27;;
+    syncPointEditor();
+    syncWindowEditor();
+  }
+
+  function selectPoint(i){
+    if(state.selected.includes(i))state.selected=state.selected.filter(v=&gt;v!==i);
+    else{if(state.selected.length===2)state.selected=[];state.selected.push(i);}
+    el(&#x27;lp-edit-point&#x27;).value=String(i);
+    render(false);
+  }
+
+  function syncPointEditor(){
+    const select=el(&#x27;lp-edit-point&#x27;),old=select.value;
+    select.innerHTML=state.points.map((p,i)=&gt;`&lt;option value=&quot;${i}&quot;&gt;P${i+1} · (${toInput(p.x).toFixed(1)}, ${toInput(p.y).toFixed(1)}) ${displayUnit()}&lt;/option&gt;`).join(&#x27;&#x27;);
+    select.value=state.points[Number(old)]?old:&#x27;0&#x27;;
+    const p=state.points[Number(select.value)]||{x:0,y:0};
+    el(&#x27;lp-point-x&#x27;).value=toInput(p.x).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);
+    el(&#x27;lp-point-y&#x27;).value=toInput(p.y).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);
+  }
+
+  function loadPointEditor(){
+    const p=state.points[Number(el(&#x27;lp-edit-point&#x27;).value)];if(!p)return;
+    el(&#x27;lp-point-x&#x27;).value=toInput(p.x).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);
+    el(&#x27;lp-point-y&#x27;).value=toInput(p.y).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);
+  }
+
+  function syncWindowEditor(){
+    const side=el(&#x27;lp-edit-window-side&#x27;).value||&#x27;front&#x27;,cfg=state.windowConfig[side];
+    el(&#x27;lp-text-relation&#x27;).value=cfg.relation;el(&#x27;lp-text-x&#x27;).value=toInput(cfg.x).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);el(&#x27;lp-text-y&#x27;).value=toInput(cfg.y).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);el(&#x27;lp-text-w&#x27;).value=toInput(cfg.w).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);el(&#x27;lp-text-h&#x27;).value=toInput(cfg.h).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);
+  }
+
+  function rebuildWindowSideOptions(){
+    const mode=el(&#x27;lp-text-side&#x27;).value,select=el(&#x27;lp-edit-window-side&#x27;),old=select.value;
+    select.innerHTML=mode===&#x27;front&#x27;?&#x27;&lt;option value=&quot;front&quot;&gt;Front window&lt;/option&gt;&#x27;:mode===&#x27;back&#x27;?&#x27;&lt;option value=&quot;back&quot;&gt;Back/side window&lt;/option&gt;&#x27;:&#x27;&lt;option value=&quot;front&quot;&gt;Front window&lt;/option&gt;&lt;option value=&quot;back&quot;&gt;Back/side window&lt;/option&gt;&#x27;;
+    select.value=[...select.options].some(o=&gt;o.value===old)?old:(mode===&#x27;back&#x27;?&#x27;back&#x27;:&#x27;front&#x27;);syncWindowEditor();
+  }
+
+  function updateShapeFields(){
+    const kind=el(&#x27;lp-shape&#x27;).value;
+    root.querySelector(&#x27;.lp-width&#x27;).hidden=kind!==&#x27;rectangle&#x27;;root.querySelector(&#x27;.lp-height&#x27;).hidden=kind!==&#x27;rectangle&#x27;;
+    root.querySelector(&#x27;.lp-side&#x27;).hidden=kind!==&#x27;square&#x27;;root.querySelector(&#x27;.lp-radius&#x27;).hidden=kind!==&#x27;circle&#x27;;render(true);
+  }
+
+  function updateTextFields(){
+    const on=el(&#x27;lp-text-needed&#x27;).checked;
+    root.querySelectorAll(&#x27;.lp-text-fields&#x27;).forEach(node=&gt;node.hidden=!on);
+    if(on&amp;&amp;el(&#x27;lp-text-side&#x27;).value!==&#x27;front&#x27;)el(&#x27;lp-show-mirror&#x27;).checked=true;
+    rebuildWindowSideOptions();
+    render(false);
+  }
+
+  function updateUnusedFields(){
+    const mode=el(&#x27;lp-unused-mode&#x27;).value;
+    root.querySelector(&#x27;.lp-unused-text&#x27;).hidden=mode!==&#x27;text&#x27;;root.querySelector(&#x27;.lp-unused-image&#x27;).hidden=mode!==&#x27;image&#x27;;
+    if(mode===&#x27;text&#x27;||mode===&#x27;image&#x27;){el(&#x27;lp-text-needed&#x27;).checked=true;updateTextFields();}else render(false);
+  }
+
+  el(&#x27;lp-join&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{if(state.selected.length===2){state.cut=[...state.selected];state.selected=[];render(false);el(&#x27;lp-message&#x27;).textContent=&#x27;The shorter perimeter section was removed and the two chosen points were joined to form the polygon.&#x27;;}});
+  el(&#x27;lp-undo&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{state.cut=null;state.selected=[];render(false);el(&#x27;lp-message&#x27;).textContent=&#x27;Cut removed. Select two perimeter points to create another polygon edge.&#x27;;});
+  el(&#x27;lp-edit-point&#x27;).addEventListener(&#x27;change&#x27;,loadPointEditor);
+  el(&#x27;lp-apply-point&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+    const i=Number(el(&#x27;lp-edit-point&#x27;).value),x=fromInput(el(&#x27;lp-point-x&#x27;).value),y=fromInput(el(&#x27;lp-point-y&#x27;).value),d=state.dimensions;
+    state.overrides[i]={x:Math.max(0,Math.min(d.w,x)),y:Math.max(0,Math.min(d.h,y))};
+    if(!state.selected.includes(i)){if(state.selected.length===2)state.selected=[];state.selected.push(i);}
+    render(false);el(&#x27;lp-message&#x27;).textContent=`P${i+1} now uses the exact coordinates entered. Select or edit the second point, then join them.`;
+  });
+  el(&#x27;lp-shape&#x27;).addEventListener(&#x27;change&#x27;,updateShapeFields);
+  [&#x27;lp-width&#x27;,&#x27;lp-height&#x27;,&#x27;lp-side&#x27;,&#x27;lp-radius&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;render(true)));
+  [&#x27;lp-hole-x&#x27;,&#x27;lp-hole-y&#x27;,&#x27;lp-hole-d&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;render(false)));
+  [&#x27;lp-show-mirror&#x27;,&#x27;lp-mirror-side&#x27;,&#x27;lp-fold-gap&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;render(false)));
+  [&#x27;lp-paper-size&#x27;,&#x27;lp-paper-orientation&#x27;,&#x27;lp-paper-corner&#x27;,&#x27;lp-paper-x-margin&#x27;,&#x27;lp-paper-y-margin&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;render(false)));
+  el(&#x27;lp-print-paper&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;window.print());
+  el(&#x27;lp-text-needed&#x27;).addEventListener(&#x27;change&#x27;,updateTextFields);
+  el(&#x27;lp-text-side&#x27;).addEventListener(&#x27;change&#x27;,updateTextFields);
+  el(&#x27;lp-edit-window-side&#x27;).addEventListener(&#x27;change&#x27;,syncWindowEditor);
+  el(&#x27;lp-text-relation&#x27;).addEventListener(&#x27;change&#x27;,()=&gt;{state.windowConfig[el(&#x27;lp-edit-window-side&#x27;).value].relation=el(&#x27;lp-text-relation&#x27;).value;render(false);});
+  [&#x27;lp-text-x&#x27;,&#x27;lp-text-y&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;{const cfg=state.windowConfig[el(&#x27;lp-edit-window-side&#x27;).value];cfg[id.endsWith(&#x27;-x&#x27;)?&#x27;x&#x27;:&#x27;y&#x27;]=fromInput(el(id).value);cfg.relation=&#x27;custom&#x27;;render(false);}));
+  [&#x27;lp-text-w&#x27;,&#x27;lp-text-h&#x27;].forEach(id=&gt;el(id).addEventListener(&#x27;input&#x27;,()=&gt;{const cfg=state.windowConfig[el(&#x27;lp-edit-window-side&#x27;).value];cfg[id.endsWith(&#x27;-w&#x27;)?&#x27;w&#x27;:&#x27;h&#x27;]=Math.max(1,fromInput(el(id).value));render(false);}));
+  el(&#x27;lp-unused-mode&#x27;).addEventListener(&#x27;change&#x27;,updateUnusedFields);
+  el(&#x27;lp-unused-text&#x27;).addEventListener(&#x27;input&#x27;,()=&gt;render(false));
+  el(&#x27;lp-unused-image&#x27;).addEventListener(&#x27;change&#x27;,e=&gt;{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=&gt;{state.unusedImage=reader.result;render(false);};reader.readAsDataURL(file);});
+  el(&#x27;lp-unit&#x27;).addEventListener(&#x27;change&#x27;,()=&gt;{
+    const ids=[&#x27;lp-width&#x27;,&#x27;lp-height&#x27;,&#x27;lp-side&#x27;,&#x27;lp-radius&#x27;,&#x27;lp-hole-x&#x27;,&#x27;lp-hole-y&#x27;,&#x27;lp-hole-d&#x27;,&#x27;lp-point-x&#x27;,&#x27;lp-point-y&#x27;,&#x27;lp-fold-gap&#x27;,&#x27;lp-paper-x-margin&#x27;,&#x27;lp-paper-y-margin&#x27;];
+    ids.forEach(id=&gt;{const input=el(id),oldUnit=displayUnit()===&#x27;cm&#x27;?&#x27;mm&#x27;:&#x27;cm&#x27;,v=Number(input.value);input.value=displayUnit()===&#x27;cm&#x27;?(oldUnit===&#x27;mm&#x27;?v/10:v):(oldUnit===&#x27;cm&#x27;?v*10:v);input.step=displayUnit()===&#x27;cm&#x27;?&#x27;.1&#x27;:&#x27;1&#x27;;});
+    render(false);
+  });
+  svg.addEventListener(&#x27;pointermove&#x27;,e=&gt;{
+    const s=svgPoint(e),p=unmap(s.x,s.y),d=state.dimensions,x=Math.max(0,Math.min(d.w,p.x)),y=Math.max(0,Math.min(d.h,p.y));
+    el(&#x27;lp-cursor&#x27;).textContent=`Cursor X ${toInput(x).toFixed(1)} ${displayUnit()} · Y ${toInput(y).toFixed(1)} ${displayUnit()}`;
+    if(state.dragWindow){const side=state.dragWindow.side,info=state.windowRects[side],cfg=state.windowConfig[side],local=unmapIn(s.x,s.y,info.view),wx=Math.max(0,Math.min(d.w-cfg.w,local.x-state.dragWindow.dx)),wy=Math.max(0,Math.min(d.h-cfg.h,local.y-state.dragWindow.dy));cfg.x=wx;cfg.y=wy;cfg.relation=&#x27;custom&#x27;;render(false);return;}
+    if(state.dragHole){el(&#x27;lp-hole-x&#x27;).value=toInput(x).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);el(&#x27;lp-hole-y&#x27;).value=toInput(y).toFixed(displayUnit()===&#x27;cm&#x27;?1:0);render(false);}
+  });
+  svg.addEventListener(&#x27;pointerup&#x27;,()=&gt;{state.dragHole=false;state.dragWindow=null;});
+  svg.addEventListener(&#x27;pointercancel&#x27;,()=&gt;{state.dragHole=false;state.dragWindow=null;});
+  updateShapeFields();
+  updateTextFields();
+  updateUnusedFields();
+})();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+<script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
+</script>
+</body>
+</html>
